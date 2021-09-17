@@ -10,13 +10,30 @@ public class PlayerController : MonoBehaviour
     bool canJump;
     public FixedJoystick fixedJoystick;
     public Rigidbody rb;
+    public Material killMat;
+    private MeshRenderer meshRenderer;
+    GameManager gm;
 
+    private void Start()
+    {
+        meshRenderer = GetComponent<MeshRenderer>();
+        gm = GameManager.instance;
+    }
     private void OnCollisionEnter(Collision collision)
     {
         if(collision.gameObject.tag == "Ground")
         {
             Debug.Log("grounded");
             canJump = true;
+        }
+        if (collision.gameObject.tag == "Midas")
+        {
+            //Debug.Log("hello");
+            rb.constraints = RigidbodyConstraints.None;
+            rb.AddForce(Random.onUnitSphere * 10, ForceMode.Impulse);
+            meshRenderer.material = killMat;
+            gm.loseCondition();
+            Destroy(this);                      
         }
     }
     public void FixedUpdate()
