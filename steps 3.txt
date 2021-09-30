@@ -1,0 +1,9 @@
+ar foundation
+arcore xr plugin
+
+set plugin management to arcore
+
+remove vulkan graphic api
+
+file > build settings > player settings > other settings section
+set minimum api level to 24
