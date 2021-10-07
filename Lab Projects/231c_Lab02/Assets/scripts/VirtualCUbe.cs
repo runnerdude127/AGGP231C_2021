@@ -22,11 +22,12 @@ public class VirtualCUbe : MonoBehaviour
         baseMat = rend.material;
 
         source = GetComponent<AudioSource>();
-        source.Play();
+        if (source)
+        { source.Play(); }
     }
     private void Update()
     {
-        source.mute = muted;
+        if (source) { source.mute = muted; }
 
         if (Input.GetKey(KeyCode.Mouse0))
         {
@@ -34,7 +35,7 @@ public class VirtualCUbe : MonoBehaviour
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit, Mathf.Infinity))
             {
-                //Debug.DrawRay(cam.transform.position, point * hit.distance, Color.yellow, 1);
+                Debug.DrawRay(cam.transform.position, hit.point * hit.distance, Color.yellow, 1);
                 Debug.Log("Did Hit");
                 if (hit.transform.gameObject.tag == "tappable")
                 {
@@ -58,7 +59,7 @@ public class VirtualCUbe : MonoBehaviour
             }
             else
             {
-               // Debug.DrawRay(cam.transform.position, point * 1000, Color.white, 1);
+                Debug.DrawRay(cam.transform.position, hit.point * 1000, Color.white, 1);
                 rend.material = baseMat;
                 if (robotnik == true)
                 {
